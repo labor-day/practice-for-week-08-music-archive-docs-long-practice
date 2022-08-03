@@ -96,170 +96,257 @@ Response components:
 
 Test this in Postman or by using `fetch` in the browser.
 
+fetch("/artists")
+  .then(res => res.json())
+  .then(resBody => console.log(resBody))
+
 ### Get a specific artist's details based on artistId
 
 Request components:
 
-- Method:
-- URL:
+- Method: GET
+- URL: /artists/:artistId
 - Headers:
 - Body:
 
 Response components:
 
-- Status code:
+- Status code: 200
 - Headers:
+    - Content-Type: application/json
 - Body:
+    {
+      "albums": [...albums here]
+      "artistId": 1,
+      "name": "Red Hot Chili Peppers"
+    }
+
+    fetch("/artists/1")
+    .then(res => res.json())
+    .then(resBody => console.log(resBody))
+
 
 ### Add an artist
 
 Request components:
 
-- Method:
-- URL:
+- Method: POST
+- URL: /artists
 - Headers:
+    - Content-Type: application/json
 - Body:
+    JSON.stringify(
+      {
+        "name": "The Front Bottoms"
+      }
+    )
 
 Response components:
 
-- Status code:
+- Status code: 200
 - Headers:
+  - Content-Type: application/json
 - Body:
+    {
+      "name": "NEW BAND"
+    }
+
+    fetch("/artists",
+    {
+      method: "POST",
+      body:JSON.stringify(
+      {
+        "name": "NEW BAND"
+      }),
+      headers: {"Content-Type": "application/json"}
+    })
+    .then(res => res.json())
+    .then(resBody => console.log(resBody))
 
 ### Edit a specified artist by artistId
 
 Request components:
 
-- Method:
-- URL:
+- Method: PATCH
+- URL: /artists/:artistId
 - Headers:
+   - Content-Type: application/json
 - Body:
+    JSON.stringify(
+      {
+        "name": "EDITED NAME"
+      }
+    )
 
 Response components:
 
-- Status code:
+- Status code: 200
 - Headers:
+  - content type json
 - Body:
+    JSON.stringify(
+      {
+        "name": "EDITED NAME"
+        "id": 4,
+        "updatedAt": "TIME"
+      }
+    )
+
+    fetch("/artists/4",
+    {
+      method: "PATCH",
+      body: JSON.stringify({"name": "EDITED NAME"}),
+      headers: {"Content-Type": "application/json"}
+    })
+    .then(res => res.json())
+    .then(resBody => console.log(resBody))
 
 ### Delete a specified artist by artistId
 
 Request components:
 
-- Method:
-- URL:
-- Headers:
-- Body:
+- Method: DELETE
+- URL: /artists/artistId
+- Headers: none
+- Body: none
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers:  content-type-json
+- Body: {message: "Successfully deleted"}
+
+fetch("/artists/4",
+  {
+    method: "DELETE",
+    body: "",
+    headers: {"Content-Type": "application/json"}
+  })
+.then(res => res.json())
+.then(resBody => console.log(resBody))
 
 ### Get all albums of a specific artist based on artistId
 
 Request components:
 
-- Method:
-- URL:
-- Headers:
-- Body:
+- Method: GET
+- URL: /artists/:artistId/albums
+- Headers: none
+- Body: none
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content-type
+- Body: [
+  {album1 data},
+  {album2 data}...
+]
+
+fetch("/artists/1/albums")
+.then(res => res.json())
+.then(resBody => console.log(resBody))
 
 ### Get a specific album's details based on albumId
 
 Request components:
 
-- Method:
-- URL:
+- Method:  GET
+- URL: /albums/:albumId
 - Headers:
 - Body:
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: content-type json
+- Body: {album data}
+
+fetch("/albums/1")
+.then(res => res.json())
+.then(resBody => console.log(resBody))
 
 ### Add an album to a specific artist based on artistId
 
 Request components:
 
-- Method:
-- URL:
-- Headers:
+- Method:POST
+- URL: /artists/:artistId/albums
+- Headers: content-type json
 - Body:
+    {
+      "name": "NEW ALBUM NAME",
+    }
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: {album data}
+
 
 ### Edit a specified album by albumId
 
 Request components:
 
-- Method:
-- URL:
-- Headers:
+- Method: PATCH
+- URL: /albums/:albumId
+- Headers: content-type json
 - Body:
+    {
+      "name": "EDITED NAME",
+    }
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: {album data}
 
 ### Delete a specified album by albumId
 
 Request components:
 
-- Method:
-- URL:
+- Method: DELETE
+- URL: /albums/albumId
 - Headers:
 - Body:
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: {message: successfully deleted}
 
 ### Get all songs of a specific artist based on artistId
 
 Request components:
 
-- Method:
-- URL:
+- Method: GET
+- URL: /artists/artistId/songs
 - Headers:
 - Body:
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: [array of songs]
 
 ### Get all songs of a specific album based on albumId
 
 Request components:
 
-- Method:
-- URL:
+- Method: GET
+- URL: /albums/albumId/songs
 - Headers:
 - Body:
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code:  200
+- Headers: json content
+- Body: [array of songs]
 
 ### Get all songs of a specified trackNumber
 
@@ -277,76 +364,99 @@ constrained by for this endpoint?
 
 Request components:
 
-- Method:
-- URL:
+- Method: GET
+- URL: /trackNumbers/1/songs
 - Headers:
 - Body:
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: [array of songs]
 
 ### Get a specific song's details based on songId
 
 Request components:
 
-- Method:
-- URL:
+- Method: GET
+- URL: /songs/songId
 - Headers:
 - Body:
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: {song data}
 
 ### Add a song to a specific album based on albumId
 
 Request components:
 
-- Method:
-- URL:
-- Headers:
+- Method: POST
+- URL: /albums/albumId/songs
+- Headers: json content
 - Body:
+    {
+      "name": "NEW SONG NAME",
+      "lyrics": "NEW SONG LYRICS",
+      "trackNumber": "NEW SONG TRACK NUMBER"
+    }
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: {song data}
 
 ### Edit a specified song by songId
 
 Request components:
 
-- Method:
-- URL:
-- Headers:
+- Method: PATCH
+- URL: /songs/songId
+- Headers: content json
 - Body:
+    {
+      "name": "EDITED SONG NAME",
+      "lyrics": "EDITED SONG LYRICS",
+      "trackNumber": "EDITED SONG TRACK NUMBER"
+    }
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: {edited song data}
+
+    fetch("/songs/2",
+    {
+      method: "PATCH",
+      body: JSON.stringify({
+          "name": "EDITED SONG NAME",
+          "lyrics": "EDITED SONG LYRICS",
+          "trackNumber": "EDITED SONG TRACK NUMBER"
+        }),
+      headers: {"Content-Type": "application/json"}
+    })
+    .then(res => res.json())
+    .then(resBody => console.log(resBody))
 
 ### Delete a specified song by songId
 
 Request components:
 
-- Method:
-- URL:
+- Method: DELETE
+- URL: /songs/songId
 - Headers:
 - Body:
 
 Response components:
 
-- Status code:
-- Headers:
-- Body:
+- Status code: 200
+- Headers: json content
+- Body: {message: successfully deleted}
 
 [http://localhost:5000]: http://localhost:5000
 [starter]: https://github.com/appacademy/practice-for-week-08-music-archive-docs-long-practice
